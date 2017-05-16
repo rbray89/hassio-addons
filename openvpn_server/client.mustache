@@ -1,0 +1,23 @@
+client
+dev tun
+proto {{protocol}}
+
+resolv-retry infinite
+nobind
+
+remote {{host}} {{port}}
+persist-key
+persist-tun
+
+{{#compress}}
+compress lzo
+comp-lzo
+{{/compress}}
+
+setenv opt block-outside-dns # Prevent Windows 10 DNS leak
+
+remote-cert-tls server
+auth SHA512
+cipher AES-256-CBC
+key-direction 1
+verb 3
