@@ -21,3 +21,9 @@ Enable/disable lzo compression
 List of client names (no spaces) to be added.
 After running, there will be \*.ovpn files for each client located in /share/openvpn/clients
 Currently, if you want to re-generate the certs, you'll need to delete the /ssl/openvpn_server and /share/openvpn/clients directories and re-start the addon. This will invalidate the previous clients and generate new certs.
+
+### routes
+Routes (ip and mask) to be pushed to clients
+
+### dns
+DNS servers to be pushed to clients. Currently working on trying to get local DNS routing properly (eg. to pihole running on another docker container on the same machine) as right now only non local (eg. 1.1.1.1, 8.8.8.8) or non machine local (same subnet, external to the machine running the openvpn server)
