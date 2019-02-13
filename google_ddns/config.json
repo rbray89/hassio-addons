@@ -1,0 +1,24 @@
+{
+    "name": "Google DDNS",
+    "version": "0.1.11",
+    "slug": "google_ddns",
+    "description": "Google Dynamic DNS client",
+    "url": "https://github.com/rbray89/hassio-addons/tree/master/google_ddns",
+    "startup": "system",
+    "boot": "auto",
+    "options": {
+        "username": "user",
+        "password": "pass",
+    	"domain": "domain.com",
+        "ipfltr": "ip addr | grep -o 'inet6 .*' | grep global | grep -v deprecated | grep -v '/128' | grep -v 'fddc:dccd' | cut -d ' ' -f 2 | cut -d '/' -f 1"
+    },
+    "schema": {
+        "username": "str",
+        "password": "str",
+        "domain": "str",
+        "ipfltr": "str"
+    },
+    "map": ["share:rw"],
+    "privileged": ["NET_ADMIN"],
+    "host_network": true
+}
