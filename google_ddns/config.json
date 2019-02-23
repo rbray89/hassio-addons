@@ -1,6 +1,6 @@
 {
     "name": "Google DDNS",
-    "version": "0.1.11",
+    "version": "0.1.12",
     "slug": "google_ddns",
     "description": "Google Dynamic DNS client",
     "url": "https://github.com/rbray89/hassio-addons/tree/master/google_ddns",
