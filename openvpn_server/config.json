@@ -4,6 +4,7 @@
   "slug": "openvpn_server",
   "description": "OpenVPN server for hassio",
   "url": "https://github.com/rbray89/hassio-addons/tree/master/openvpn_server",
+  "arch": ["armhf", "aarch64", "amd64", "i386", "armv7"],
   "startup": "system",
   "boot": "auto",
   "options": {
