@@ -3,6 +3,7 @@
     "version": "0.1.12",
     "slug": "google_ddns",
     "description": "Google Dynamic DNS client",
+    "arch": ["armhf", "aarch64", "amd64", "i386", "armv7"],
     "url": "https://github.com/rbray89/hassio-addons/tree/master/google_ddns",
     "startup": "system",
     "boot": "auto",
