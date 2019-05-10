@@ -1,6 +1,6 @@
 {
   "name": "OpenVPN Server",
-  "version": "0.1.59",
+  "version": "0.1.60",
   "slug": "openvpn_server",
   "description": "OpenVPN server for hassio",
   "url": "https://github.com/rbray89/hassio-addons/tree/master/openvpn_server",
