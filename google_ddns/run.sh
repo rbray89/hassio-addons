@@ -11,7 +11,7 @@ IP_LAST=""
 while true; do
     IP_LATEST=$(eval $IPFLTR)
     if [ "$IP_LATEST" != "$IP_LAST" ]; then
-       wget "https://$USERNAME:$PASSWORD@domains.google.com/nic/update?hostname=$DOMAIN&myip=$IP_LATEST" -O -
+       wget -qO- "https://$USERNAME:$PASSWORD@domains.google.com/nic/update?hostname=$DOMAIN&myip=$IP_LATEST" 
     fi
     IP_LAST=$IP_LATEST
     sleep 5s
