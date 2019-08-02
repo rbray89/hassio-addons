@@ -1,6 +1,6 @@
 {
     "name": "Google DDNS",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "slug": "google_ddns",
     "description": "Google Dynamic DNS client",
     "arch": ["armhf", "aarch64", "amd64", "i386", "armv7"],
