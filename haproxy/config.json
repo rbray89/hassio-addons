@@ -1,10 +1,10 @@
 {
-    "name": "sslh",
+    "name": "haproxy",
     "version": "0.1.00",
-    "slug": "sslh",
+    "slug": "haproxy",
     "arch": ["amd64", "i386", "armhf", "aarch64"],
-    "description": "SSLH port multiplexer",
-    "url": "https://github.com/rbray89/hassio-addons/tree/master/sslh",
+    "description": "Haproxy server",
+    "url": "https://github.com/rbray89/hassio-addons/tree/master/haproxy",
     "startup": "system",
     "boot": "auto",
     "options": {
