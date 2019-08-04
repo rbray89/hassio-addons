@@ -1,6 +1,6 @@
 {
   "name": "OpenVPN Server",
-  "version": "0.1.61",
+  "version": "0.1.66",
   "slug": "openvpn_server",
   "description": "OpenVPN server for hassio",
   "url": "https://github.com/rbray89/hassio-addons/tree/master/openvpn_server",
@@ -42,10 +42,9 @@
    "dns": [ "str" ]
   },
   "ports": {
-   "1194/tcp": 1194,
-   "1194/udp": 1194 
+      "1194/tcp": 1194,
+      "1194/udp": 1194
   },
   "map": ["ssl:rw", "share:rw"],
-  "privileged": ["NET_ADMIN"],
-  "host_network": true
+  "privileged": ["NET_ADMIN"]
 }
