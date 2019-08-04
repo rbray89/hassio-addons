@@ -1,0 +1,29 @@
+{
+    "name": "sslh",
+    "version": "0.1.00",
+    "slug": "sslh",
+    "arch": ["amd64", "i386", "armhf", "aarch64"],
+    "description": "SSLH port multiplexer",
+    "url": "https://github.com/rbray89/hassio-addons/tree/master/sslh",
+    "startup": "system",
+    "boot": "auto",
+    "options": {
+	"use_cfg": false,
+	"services":[
+		{ "type": "main-ssl", "port": 4443 },
+		{ "type": "openvpn", "port": 1194 }
+	]
+    },
+    "ports": {
+        "443/tcp": 4443
+    },
+    "schema": {
+	"use_cfg": "bool",    
+        "services": [
+		{"type": "str", "port": "port"}
+	]
+    },
+    "map": ["share:rw"],
+    "privileged": ["NET_ADMIN"],
+    "host_network": true
+}
