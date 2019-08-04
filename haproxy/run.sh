@@ -3,7 +3,7 @@
 CONFIG_PATH=/data/options.json
 USE_CONFIG=$(jq --raw-output ".use_cfg" $CONFIG_PATH)
 
-if [[ $use_cfg = false ]]; then
+if [[ $USE_CONFIG = false ]]; then
 
 echo "frontend ssl">> /etc/haproxy/haproxy.cfg
 echo "mode tcp" >> /etc/haproxy/haproxy.cfg
