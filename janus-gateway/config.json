@@ -1,0 +1,29 @@
+{
+    "name": "janus-gateway",
+    "version": "0.1.01",
+    "slug": "haproxy",
+    "arch": ["amd64", "i386", "armhf", "aarch64"],
+    "description": "Janus gateway server",
+    "url": "https://github.com/rbray89/hassio-addons/tree/master/janus-gateway",
+    "startup": "system",
+    "boot": "auto",
+    "options": {
+	"use_cfg": false,
+	"services":[
+		{ "type": "main-ssl", "port": 4443 },
+		{ "type": "openvpn", "port": 1194 }
+	]
+    },
+    "ports": {
+        "8088/tcp": 8088
+    },
+    "schema": {
+	"use_cfg": "bool",    
+        "services": [
+		{"type": "str", "port": "port"}
+	]
+    },
+    "map": ["share:rw"],
+    "privileged": ["NET_ADMIN"],
+    "host_network": true
+}
