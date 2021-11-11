@@ -1,7 +1,7 @@
 {
     "name": "janus-gateway",
-    "version": "0.1.01",
-    "slug": "haproxy",
+    "version": "0.1.22",
+    "slug": "janus-gateway",
     "arch": ["amd64", "i386", "armhf", "aarch64"],
     "description": "Janus gateway server",
     "url": "https://github.com/rbray89/hassio-addons/tree/master/janus-gateway",
@@ -9,18 +9,27 @@
     "boot": "auto",
     "options": {
 	"use_cfg": false,
-	"services":[
-		{ "type": "main-ssl", "port": 4443 },
-		{ "type": "openvpn", "port": 1194 }
+	"api_secret": "janusrocks123",
+	"streams":[
+		{ "name": "rtsp-test", "type":"rtsp", "url": "rtsp://192.168.1.1/stream", "rtsp_user": "admin", "rtsp_pwd": "secret", "audio": true, "video": true }
 	]
     },
     "ports": {
         "8088/tcp": 8088
     },
     "schema": {
-	"use_cfg": "bool",    
-        "services": [
-		{"type": "str", "port": "port"}
+	"use_cfg": "bool", 
+        "api_secret": "str",   
+        "streams": [
+	    {
+              "name": "str",
+              "type": "str",
+              "url": "url",
+              "rtsp_user": "str",
+              "rtsp_pwd": "str",
+              "audio": "bool",
+              "video": "bool"
+            }
 	]
     },
     "map": ["share:rw"],

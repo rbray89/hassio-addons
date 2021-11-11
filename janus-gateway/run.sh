@@ -2,30 +2,34 @@
 
 CONFIG_PATH=/data/options.json
 USE_CONFIG=$(jq --raw-output ".use_cfg" $CONFIG_PATH)
+API_SECRET=$(jq --raw-output ".api_secret" $CONFIG_PATH) 
 
-#if [[ $USE_CONFIG = false ]]; then
+if [[ $USE_CONFIG = false ]]; then
+echo '' > /usr/local/etc/janus/janus.plugin.streaming.jcfg
+cat $CONFIG_PATH 
+jq --raw-output '.streams' $CONFIG_PATH | jq -rc '.[]' | while read STREAM_CONFIG; do
+    NAME=`echo "$STREAM_CONFIG" | jq '.name' | tr -d '"'`
+    echo "$NAME: {" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
+    echo "description =  \"RTSP $NAME Stream\"" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
+    TYPE=`echo "$STREAM_CONFIG" | jq '.type'`
+    echo "type = $TYPE" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
+    AUDIO=`echo "$STREAM_CONFIG" | jq '.audio'`
+    echo "audio = $AUDIO" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
+    VIDEO=`echo "$STREAM_CONFIG" | jq '.video'`
+    echo "video = $VIDEO" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
+    URL=`echo "$STREAM_CONFIG" | jq '.url'`
+    echo "url = $URL" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
+    RTSP_USER=`echo "$STREAM_CONFIG" | jq '.rtsp_user'`
+    echo "rtsp_user = $RTSP_USER" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
+    RTSP_PWD=`echo "$STREAM_CONFIG" | jq '.rtsp_pwd'`
+    echo "rtsp_pwd = $RTSP_PWD" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
+    echo "}" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
+done
 
-#echo "frontend ssl">> /etc/haproxy/haproxy.cfg
-#echo "mode tcp" >> /etc/haproxy/haproxy.cfg
-#echo "bind 0.0.0.0:443" >> /etc/haproxy/haproxy.cfg
-#echo "tcp-request inspect-delay 5s" >> /etc/haproxy/haproxy.cfg
-#echo "tcp-request content accept if HTTP" >> /etc/haproxy/haproxy.cfg
-#echo "# use_backend ssh if { payload(0,7) -m bin 5353482d322e30 }" >> /etc/haproxy/haproxy.cfg
-#echo "use_backend main-ssl if { req.ssl_hello_type 1 }" >> /etc/haproxy/haproxy.cfg
-#echo "default_backend openvpn" >> /etc/haproxy/haproxy.cfg
- 
-#jq --raw-output '.services' $CONFIG_PATH | jq -rc '.[]' | while read SERVICE_CONFIG; do
-#    TYPE=`echo "$SERVICE_CONFIG" | jq '.type'`
-#    PORT=`echo "$SERVICE_CONFIG" | jq '.port'`
-#    echo "backend $TYPE" >> /etc/haproxy/haproxy.cfg
-#    echo "mode tcp" >> /etc/haproxy/haproxy.cfg
-#    echo "timeout server 2h" >> /etc/haproxy/haproxy.cfg
-#    echo "server $TYPE-localhost 127.0.0.1:$PORT" >> /etc/haproxy/haproxy.cfg
-#done
-
-#/usr/sbin/haproxy -db -f /etc/haproxy/haproxy.cfg
 else
-#	/usr/sbin/haproxy -db -f /share/haproxy.cfg
+  cp /share/janus/*.jcfg /usr/local/etc/janus/
 fi
 
-/var/janus/bin/janus -o
+sed -i "s/@API_SECRET@/$API_SECRET/g" /usr/local/etc/janus/janus.jcfg
+
+/usr/local/bin/janus -o

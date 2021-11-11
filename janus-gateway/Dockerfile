@@ -3,7 +3,7 @@ FROM $BUILD_FROM
 
 # Add env
 ENV LANG C.UTF-8
-UN echo "**** install build packages ****" && \
+RUN echo "**** install build packages ****" && \
 	apk add --no-cache --virtual=build-dependencies --upgrade \
 	autoconf \
 	automake \
@@ -34,7 +34,6 @@ UN echo "**** install build packages ****" && \
 	libwebsockets-dev \
 	lua5.3-dev \
 	openjpeg-dev \
-	openssl-dev \
 	opus-dev \
 	pkgconf \
 	python3-dev \
@@ -55,14 +54,14 @@ RUN mkdir -p /usr/src/janus /var/janus/log /var/janus/data /var/janus/html \
 	&& cd /usr/src/janus && wget https://github.com/meetecho/janus-gateway/archive/v0.10.8.tar.gz \
 	&& tar -xzf v0.10.8.tar.gz && cd janus-gateway-0.10.8 \
 	&& cp -r /usr/src/janus/janus-gateway-0.10.8/html/* /var/janus/html \
+        && sed -i 's/"upnp", FALSE/"upnp", TRUE/g' ice.c \
 	&& sh autogen.sh \
-	&& ./configure --prefix=/var/janus --disable-rabbitmq --disable-mqtt \
-	&& make && make install && make configs \
-	&& rm -rf /usr/src/janus 
+	&& ./configure --disable-rabbitmq --disable-mqtt \
+	&& make && make install && make configs
 
 
-COPY conf/janus.transport.http.jcfg /var/janus/etc/janus/janus.transport.http.jcfg
-COPY conf/janus.jcfg /var/janus/etc/janus/janus.jcfg
+COPY conf/janus.transport.http.jcfg /usr/local/etc/janus/janus.transport.http.jcfg
+COPY conf/janus.jcfg /usr/local/etc/janus/janus.jcfg
 
 # Copy data
 COPY run.sh /
