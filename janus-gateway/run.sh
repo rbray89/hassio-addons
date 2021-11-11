@@ -7,10 +7,12 @@ API_SECRET=$(jq --raw-output ".api_secret" $CONFIG_PATH)
 if [[ $USE_CONFIG = false ]]; then
 echo '' > /usr/local/etc/janus/janus.plugin.streaming.jcfg
 cat $CONFIG_PATH 
+id=1
 jq --raw-output '.streams' $CONFIG_PATH | jq -rc '.[]' | while read STREAM_CONFIG; do
     NAME=`echo "$STREAM_CONFIG" | jq '.name' | tr -d '"'`
     echo "$NAME: {" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
     echo "description =  \"RTSP $NAME Stream\"" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
+    echo "id =  $id" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
     TYPE=`echo "$STREAM_CONFIG" | jq '.type'`
     echo "type = $TYPE" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
     AUDIO=`echo "$STREAM_CONFIG" | jq '.audio'`
@@ -24,6 +26,7 @@ jq --raw-output '.streams' $CONFIG_PATH | jq -rc '.[]' | while read STREAM_CONFI
     RTSP_PWD=`echo "$STREAM_CONFIG" | jq '.rtsp_pwd'`
     echo "rtsp_pwd = $RTSP_PWD" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
     echo "}" >> /usr/local/etc/janus/janus.plugin.streaming.jcfg
+    ((id=id+1))
 done
 
 else

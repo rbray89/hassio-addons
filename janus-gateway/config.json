@@ -1,6 +1,6 @@
 {
     "name": "janus-gateway",
-    "version": "0.1.22",
+    "version": "0.1.24",
     "slug": "janus-gateway",
     "arch": ["amd64", "i386", "armhf", "aarch64"],
     "description": "Janus gateway server",
