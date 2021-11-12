@@ -3,7 +3,7 @@
 CONFIG_PATH=/data/options.json
 USE_CONFIG=$(jq --raw-output ".use_cfg" $CONFIG_PATH)
 API_SECRET=$(jq --raw-output ".api_secret" $CONFIG_PATH) 
-
+find / -name *.jcfg
 if [[ $USE_CONFIG = false ]]; then
 echo '' > /usr/local/etc/janus/janus.plugin.streaming.jcfg
 cat $CONFIG_PATH 

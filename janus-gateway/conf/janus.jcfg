@@ -248,7 +248,7 @@ nat: {
 	#stun_server = "stun.voip.eutelia.it"
 	#stun_port = 3478
 	nice_debug = true
-	full_trickle = true
+	full_trickle = false
 	#ice_lite = true
 	#ice_tcp = true
 
@@ -313,7 +313,7 @@ nat: {
 	#     ice_enforce_list = "eth0,192.168."
 	#     ice_enforce_list = "eth0,192.168.0.1"
 	# By default, no interface is enforced, meaning Janus will try to use them all.
-	ice_enforce_list = "eth0"
+	#ice_enforce_list = "eth0"
 
 	# In case you don't want to specify specific interfaces to use, but would
 	# rather tell Janus to use all the available interfaces except some that
@@ -331,7 +331,7 @@ nat: {
 	# Just beware that the ICE ignore list is not used if an enforce list
 	# has been configured. By default, Janus ignores all interfaces whose
 	# name starts with 'vmnet', to skip VMware interfaces:
-	ice_ignore_list = "vmnet,veth"
+	ice_ignore_list = "vmnet,veth,docker,hassio"
 
 	# In case you want to allow Janus to start even if the configured STUN or TURN
 	# server is unreachable, you can set 'ignore_unreachable_ice_server' to true.
