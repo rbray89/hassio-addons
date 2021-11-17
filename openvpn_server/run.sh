@@ -80,7 +80,7 @@ rm -rf /etc/iptables
 mkdir /etc/iptables
 
 PROTOCOL=$(jq -rc '.protocol' $CONFIG_PATH)
-PORT=$(jq -rc '.port' $CONFIG_PATH)
+PORT=1194
 NIC=$(ip -4 route ls | grep default | cut -d ' ' -f5)
 IPV6=$(jq -rc '.ipv6' $CONFIG_PATH)
 

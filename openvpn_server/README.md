@@ -8,8 +8,8 @@ Hostname that clients will use to reach the server. This should be either an IP 
 ### protocol
 tcp or udp (recommended)
 
-### port
-Port that clients will use to reach the server. Note that if you change this in the config, you will need to also change the network port as well.
+### remotePort
+Remote Port that clients will use to reach the server. Note that if you change this in the config, you will likely need to also change the network port as well, unless you are behind another proxy (eg. haproxy), in which case, use that remote port.
 
 ### ipv6
 Some targets may not be able to setup IPv6 routing if the kernel modules are not already loaded. Disabled by default.

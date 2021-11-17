@@ -1,6 +1,6 @@
 {
   "name": "OpenVPN Server",
-  "version": "0.1.63",
+  "version": "0.1.64",
   "slug": "openvpn_server",
   "description": "OpenVPN server for hassio",
   "url": "https://github.com/rbray89/hassio-addons/tree/master/openvpn_server",
@@ -10,7 +10,7 @@
   "options": {
    "host": "homeassistant.domain.tld",
    "protocol": "udp",
-   "port": 1194,
+   "remotePort": 1194,
    "ipv6": false,
    "compress": true,
    "clients": ["clientA", "clientB"],
@@ -25,7 +25,7 @@
   "schema": {
    "host": "str",
    "protocol": "match(^(tcp|udp)$)",
-   "port": "port",
+   "remotePort": "port",
    "ipv6": "bool",
    "compress": "bool",
    "clients": ["match(^[^ ]+$)"],
