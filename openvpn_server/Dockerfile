@@ -13,10 +13,10 @@ RUN apk add --no-cache -U --virtual .build-deps \
 	go \
  && apk add --update -U --no-cache \
         jq \
-        bc \
         libressl \
         iptables \
         ip6tables \
+        openssl \
         openvpn \
  && go get -u github.com/quantumew/mustache-cli \
  && cp $GOPATH/bin/* /usr/local/bin/ \

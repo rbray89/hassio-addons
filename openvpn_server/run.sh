@@ -79,42 +79,24 @@ fi
 rm -rf /etc/iptables
 mkdir /etc/iptables
 
-IPprefix_by_netmask() {
-    #function returns prefix for given netmask in arg1
-    bits=0
-    for octet in $(echo $1| sed 's/\./ /g'); do
-         binbits=$(echo "obase=2; ibase=10; ${octet}"| bc | sed 's/0//g')
-         let bits+=${#binbits}
-    done
-    echo "/${bits}"
-}
-
-SERVER=$(jq -rc '.network.ip' $CONFIG_PATH)
-NETMASK=$(jq -rc '.network.mask' $CONFIG_PATH)
-
 PROTOCOL=$(jq -rc '.protocol' $CONFIG_PATH)
 PORT=$(jq -rc '.port' $CONFIG_PATH)
 NIC=$(ip -4 route ls | grep default | cut -d ' ' -f5)
 IPV6=$(jq -rc '.ipv6' $CONFIG_PATH)
 
 echo "#!/bin/sh
-iptables -t nat -A POSTROUTING -s $SERVER$(IPprefix_by_netmask $NETMASK) -o $NIC -j MASQUERADE" > /etc/iptables/add-openvpn-rules.sh
-
-jq -rc '.routes[] | .ip + " " + .mask' $CONFIG_PATH | while read -r IP MASK; do
-    echo "iptables -t nat -A POSTROUTING -s $IP$(IPprefix_by_netmask $MASK) -o $NIC -j MASQUERADE" >> /etc/iptables/add-openvpn-rules.sh
-done
-
-echo "iptables -A INPUT -i tun0 -j ACCEPT
+iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o $NIC -j MASQUERADE
+iptables -A INPUT -i tun0 -j ACCEPT
 iptables -A FORWARD -i $NIC -o tun0 -j ACCEPT
 iptables -A FORWARD -i tun0 -o $NIC -j ACCEPT
-iptables -A INPUT -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" >> /etc/iptables/add-openvpn-rules.sh
+iptables -A INPUT -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" > /etc/iptables/add-openvpn-rules.sh
 
 echo "#!/bin/sh
-iptables -t nat -D POSTROUTING -s $SERVER$(IPprefix_by_netmask $NETMASK) -o $NIC -j MASQUERADE" > /etc/iptables/rm-openvpn-rules.sh
-echo "iptables -D INPUT -i tun0 -j ACCEPT
+iptables -t nat -D POSTROUTING -s 10.8.0.0/24 -o $NIC -j MASQUERADE
+iptables -D INPUT -i tun0 -j ACCEPT
 iptables -D FORWARD -i $NIC -o tun0 -j ACCEPT
 iptables -D FORWARD -i tun0 -o $NIC -j ACCEPT
-iptables -D INPUT -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" >> /etc/iptables/rm-openvpn-rules.sh
+iptables -D INPUT -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" > /etc/iptables/rm-openvpn-rules.sh
 
 if [ "$IPV6" == "true" ]; then
     echo "ip6tables -t nat -A POSTROUTING -s fd42:42:42:42::/112 -o $NIC -j MASQUERADE
