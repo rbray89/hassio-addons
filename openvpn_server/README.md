@@ -20,7 +20,7 @@ Enable/disable lzo compression
 ### clients
 List of client names (no spaces) to be added.
 After running, there will be \*.ovpn files for each client located in /share/openvpn/clients
-Currently, if you want to re-generate the certs, you'll need to delete the /ssl/openvpn_server and /share/openvpn/clients directories and re-start the addon. This will invalidate the previous clients and generate new certs.
+Currently, if you want to re-generate the certs, you'll need to delete the /ssl/openvpn_server and /share/openvpn/clients directories and re-start the addon. This will invalidate the previous clients and generate new certs. Removing or adding entries from this list will add/revoke the clients.
 
 ### routes
 Routes (ip and mask) to be pushed to clients
