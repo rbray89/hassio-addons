@@ -30,7 +30,9 @@ push "route {{ip}} {{mask}}"
 push "redirect-gateway def1 bypass-dhcp"
 
 {{#compress}}
-compress lzo
+compress lz4-v2
+push "compress lz4-v2"
+allow-compression yes
 {{/compress}}
 
 user nobody
@@ -40,15 +42,16 @@ persist-key
 persist-tun
 
 auth SHA512
-cipher AES-256-CBC
+cipher AES-256-GCM
 
+crl-verify /ssl/openvpn_server/pki/crl.pem
 ca /ssl/openvpn_server/pki/ca.crt
 cert /ssl/openvpn_server/pki/issued/server.crt
 key /ssl/openvpn_server/pki/private/server.key
 crl-verify /ssl/openvpn_server/pki/crl.pem
 tls-auth /ssl/openvpn_server/ta.key 0
 ifconfig-pool-persist /ssl/openvpn_server/ipp.txt
-dh /data/dhparam.pem
+dh /ssl/openvpn_server/dhparam.pem
 
 status /var/log/openvpn-status.log
 verb 3

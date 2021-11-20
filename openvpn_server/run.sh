@@ -2,8 +2,9 @@
 set -e
 CONFIG_PATH="/data/options.json"
 
-if [ ! -e /data/dhparam.pem ]; then
-    openssl dhparam -dsaparam -out /data/dhparam.pem 4096
+mkdir -p /ssl/openvpn_server
+if [ ! -e /ssl/openvpn_server/dhparam.pem ]; then
+    openssl dhparam -dsaparam -out /ssl/openvpn_server/dhparam.pem 4096
 fi
 
 mustache-cli $CONFIG_PATH /templates/server.mustache > /etc/openvpn/server.conf
@@ -27,7 +28,7 @@ add_client () {
 
     echo "<key>" >> /share/openvpn/clients/$client.ovpn
     cat /ssl/openvpn_server/pki/private/$client.key >> /share/openvpn/clients/$client.ovpn
-    echo "</key>" >> /share/openvpn/clients/$1.ovpn
+    echo "</key>" >> /share/openvpn/clients/$client.ovpn
 
     echo "<tls-auth>" >> /share/openvpn/clients/$client.ovpn
     cat /ssl/openvpn_server/ta.key >> /share/openvpn/clients/$client.ovpn
@@ -35,7 +36,6 @@ add_client () {
 }
 
 server_certs () {
-    mkdir -p /ssl/openvpn_server
     cd /ssl/openvpn_server
 
     # Create the PKI, set up the CA and the server and client certificates
@@ -54,21 +54,39 @@ if [ ! -e /ssl/openvpn_server/ta.key ]; then
     server_certs
 fi
 
-if [ ! -d /share/openvpn/clients ]; then
-    cd /ssl/openvpn_server
-    jq --raw-output '.clients' $CONFIG_PATH | jq -rc '.[]' | while read CLIENT; do
+echo 'server'>/tmp/clients
+cd /ssl/openvpn_server
+jq --raw-output '.clients' $CONFIG_PATH | jq -rc '.[]' | while read CLIENT; do
+   if [ ! -f /share/openvpn/clients/$CLIENT.ovpn ]; then
         EASYRSA_CERT_EXPIRE=3650 /etc/openvpn/easy-rsa/easyrsa build-client-full $CLIENT nopass
         add_client $CLIENT
-    done
-fi
+   fi
+   echo adding "$CLIENT"
+   echo "$CLIENT">>/tmp/clients
+done
+
+echo Authorized certs:
+cat /tmp/clients
+
+for CLIENT in `ls /ssl/openvpn_server/pki/issued/*.crt | sed -r 's/.*\/([^\/]+).crt/\1/'`; do
+  if ! grep -Fxq "$CLIENT" /tmp/clients ; then
+    echo depricating $CLIENT
+cat << EOF | /etc/openvpn/easy-rsa/easyrsa revoke $CLIENT
+yes
+EOF
+    rm /ssl/openvpn_server/pki/issued/$CLIENT.crt
+    rm /share/openvpn/clients/$CLIENT.ovpn
+  fi
+done
+/etc/openvpn/easy-rsa/easyrsa gen-crl
 
 # forward request and error logs to docker log collector
 ln -sf /dev/stdout /var/log/openvpn-status.log
 #ln -sf /dev/stderr /var/log/openvpn.log
 
-if ( [ ! -c /dev/net/tun ] ); then
+if ([ ! -c /dev/net/tun ] ); then
   if ( [ ! -d /dev/net ] ); then
-    mkdir -m 755 /dev/net
+    mkdir -m 755 /dev/n et
   fi
   echo "Creating /dev/net/tun..."
   mknod /dev/net/tun c 10 200
