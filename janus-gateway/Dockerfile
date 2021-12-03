@@ -27,9 +27,9 @@ RUN wget https://github.com/cisco/libsrtp/archive/v2.3.0.tar.gz \
 
 # Janus WebRTC Installation
 RUN mkdir -p /usr/src/janus /var/janus/log /var/janus/data /var/janus/html \
-	&& cd /usr/src/janus && wget https://github.com/meetecho/janus-gateway/archive/v0.10.8.tar.gz \
-	&& tar -xzf v0.10.8.tar.gz && cd janus-gateway-0.10.8 \
-	&& cp -r /usr/src/janus/janus-gateway-0.10.8/html/* /var/janus/html \
+	&& cd /usr/src/janus && wget https://github.com/meetecho/janus-gateway/archive/v0.11.5.tar.gz \
+	&& tar -xzf v0.11.5.tar.gz && cd janus-gateway-0.11.5 \
+	&& cp -r /usr/src/janus/janus-gateway-0.11.5/html/* /var/janus/html \
         && sed -i 's/"upnp", FALSE/"upnp", TRUE/g' ice.c \
 	&& sh autogen.sh \
 	&& ./configure --disable-rabbitmq --disable-mqtt --disable-websockets \
