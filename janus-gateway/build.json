@@ -1,9 +1,9 @@
 
 {
   "build_from": {
-    "amd64": "homeassistant/amd64-base-debian:buster",
-    "i386": "homeassistant/i386-base-debian:buster",
-    "armhf": "homeassistant/armhf-base-debian:buster",
-    "aarch64": "homeassistant/aarch64-base-debian:buster"
+    "amd64": "homeassistant/amd64-base-debian:bullseye",
+    "i386": "homeassistant/i386-base-debian:bullseye",
+    "armhf": "homeassistant/armhf-base-debian:bullseye",
+    "aarch64": "homeassistant/aarch64-base-debian:bullseye"
   }
 }

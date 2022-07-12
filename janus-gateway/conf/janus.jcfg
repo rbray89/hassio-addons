@@ -215,7 +215,7 @@ media: {
 	# anyway (which is the main reason why video retransmissions are typically
 	# required). While this optimization is known to work fine in most cases,
 	# it can backfire in some edge cases, and so is disabled by default.
-	#nack_optimizations = true
+	nack_optimizations = true
 
 	# If you need DSCP packet marking and prioritization, you can configure
 	# the 'dscp' property to a specific values, and Janus will try to
@@ -248,8 +248,9 @@ nat: {
 	#stun_server = "stun.voip.eutelia.it"
 	#stun_port = 3478
 	nice_debug = true
-	full_trickle = false
-	#ice_lite = true
+        ice_nomination = "aggressive"
+	full_trickle = true
+	ice_lite = true
 	#ice_tcp = true
 
 	# By default Janus tries to resolve mDNS (.local) candidates: even
