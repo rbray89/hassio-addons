@@ -5,8 +5,8 @@ FROM $BUILD_FROM
 ENV LANG C.UTF-8
 
 RUN   apk update \
- &&   apk add ca-certificates haproxy \
- &&   update-ca-certificates
+    &&   apk add ca-certificates haproxy \
+    &&   update-ca-certificates
 
 # Copy data
 COPY run.sh /

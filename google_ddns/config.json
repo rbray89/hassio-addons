@@ -1,6 +1,6 @@
 {
     "name": "Google DDNS",
-    "version": "0.1.14",
+    "version": "0.1.15",
     "slug": "google_ddns",
     "description": "Google Dynamic DNS client",
     "arch": ["armhf", "aarch64", "amd64", "i386", "armv7"],
@@ -10,7 +10,7 @@
     "options": {
         "username": "user",
         "password": "pass",
-    	"domain": "domain.com",
+        "domain": "domain.com",
         "ipfltr": "ip addr | grep -o 'inet6 .*' | grep global | grep -v deprecated | grep -v '/128' | grep -v 'fddc:dccd' | cut -d ' ' -f 2 | cut -d '/' -f 1"
     },
     "schema": {

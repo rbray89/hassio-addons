@@ -10,7 +10,7 @@ RUN apk add --no-cache -U --virtual .build-deps \
         build-base \
         wget \
         git \
-	go \
+        go \
  && apk add --update -U --no-cache \
         jq \
         libressl \
