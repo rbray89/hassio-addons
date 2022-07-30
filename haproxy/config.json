@@ -1,12 +1,13 @@
 {
     "name": "haproxy",
-    "version": "0.1.02",
+    "version": "0.1.03",
     "slug": "haproxy",
     "arch": ["amd64", "i386", "armhf", "aarch64"],
     "description": "Haproxy server",
     "url": "https://github.com/rbray89/hassio-addons/tree/master/haproxy",
     "startup": "system",
     "boot": "auto",
+    "init": false,
     "options": {
 	"use_cfg": false,
 	"services":[

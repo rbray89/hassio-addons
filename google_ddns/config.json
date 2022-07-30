@@ -1,12 +1,13 @@
 {
     "name": "Google DDNS",
-    "version": "0.1.15",
+    "version": "0.1.17",
     "slug": "google_ddns",
     "description": "Google Dynamic DNS client",
     "arch": ["armhf", "aarch64", "amd64", "i386", "armv7"],
     "url": "https://github.com/rbray89/hassio-addons/tree/master/google_ddns",
     "startup": "system",
     "boot": "auto",
+    "init": false,
     "options": {
         "username": "user",
         "password": "pass",
@@ -18,8 +19,5 @@
         "password": "str",
         "domain": "str",
         "ipfltr": "str"
-    },
-    "map": ["share:rw"],
-    "privileged": ["NET_ADMIN"],
-    "host_network": true
+    }
 }
