@@ -1,6 +1,6 @@
 {
     "name": "haproxy",
-    "version": "0.1.03",
+    "version": "0.1.04",
     "slug": "haproxy",
     "arch": ["amd64", "i386", "armhf", "aarch64"],
     "description": "Haproxy server",
@@ -21,10 +21,8 @@
     "schema": {
 	"use_cfg": "bool",    
         "services": [
-		{"type": "str", "port": "port", "protocol":"str"}
+		{"type": "str", "address":"str", "port": "port", "protocol":"str"}
 	]
     },
-    "map": ["share:rw"],
-    "privileged": ["NET_ADMIN"],
-    "host_network": true
+    "map": ["share:rw"]
 }
