@@ -18,7 +18,7 @@ RUN apk add --no-cache -U --virtual .build-deps \
         ip6tables \
         openssl \
         openvpn \
- && go get -u github.com/quantumew/mustache-cli \
+ && go install github.com/quantumew/mustache-cli@latest \
  && cp $GOPATH/bin/* /usr/local/bin/ \
  && rm -rf $GOPATH \
  && wget https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.5/EasyRSA-nix-3.0.5.tgz -O ~/easyrsa.tgz \
