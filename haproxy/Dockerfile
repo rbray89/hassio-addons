@@ -15,7 +15,7 @@ RUN  apk add --no-cache -U --virtual .build-deps \
     &&   update-ca-certificates \
     && go get -u github.com/quantumew/mustache-cli \
     && cp $GOPATH/bin/* /usr/local/bin/ \
-    && rm -rf $GOPATH
+    && rm -rf $GOPATH \
     && apk del .build-deps
 
 # Copy data
