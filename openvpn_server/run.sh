@@ -81,8 +81,7 @@ done
 /etc/openvpn/easy-rsa/easyrsa gen-crl
 
 # forward request and error logs to docker log collector
-ln -sf /dev/stdout /var/log/openvpn-status.log
-#ln -sf /dev/stderr /var/log/openvpn.log
+ln -sf /proc/1/fd/1 /var/log/openvpn-status.log
 
 if ([ ! -c /dev/net/tun ] ); then
   if ( [ ! -d /dev/net ] ); then
