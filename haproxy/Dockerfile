@@ -3,6 +3,7 @@ FROM $BUILD_FROM
 
 # Add env
 ENV LANG C.UTF-8
+ENV GOPATH /opt/go
 
 RUN  apk add --no-cache -U --virtual .build-deps \
         build-base \
@@ -13,7 +14,7 @@ RUN  apk add --no-cache -U --virtual .build-deps \
       ca-certificates \
       haproxy \
     &&   update-ca-certificates \
-    && go get -u github.com/quantumew/mustache-cli \
+    && go install github.com/quantumew/mustache-cli@latest \
     && cp $GOPATH/bin/* /usr/local/bin/ \
     && rm -rf $GOPATH \
     && apk del .build-deps
