@@ -16,12 +16,13 @@ echo "default_backend openvpn" >> /etc/haproxy/haproxy.cfg
 
 jq --raw-output '.services' $CONFIG_PATH | jq -rc '.[]' | while read SERVICE_CONFIG; do
     TYPE=`echo "$SERVICE_CONFIG" | jq '.type'`
+    ADDR=`echo "$SERVICE_CONFIG" | jq '.address'`
     PORT=`echo "$SERVICE_CONFIG" | jq '.port'`
     PROTOCOL=`echo "$SERVICE_PROTOCOL" | jq '.protocol'`
     echo "backend $TYPE" >> /etc/haproxy/haproxy.cfg
     echo "mode tcp" >> /etc/haproxy/haproxy.cfg
 #    echo "timeout server 2h" >> /etc/haproxy/haproxy.cfg
-    echo "server $TYPE-localhost 127.0.0.1:$PORT $PROTOCOL" >> /etc/haproxy/haproxy.cfg
+    echo "server $TYPE-localhost $ADDR:$PORT $PROTOCOL" >> /etc/haproxy/haproxy.cfg
 done
 
 /usr/sbin/haproxy -db -f /etc/haproxy/haproxy.cfg
