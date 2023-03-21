@@ -12,7 +12,7 @@ RUN  apk add --no-cache -U --virtual .build-deps \
     &&   apk add --update -U --no-cache \
       ca-certificates \
       haproxy \
-    &&   update-ca-certificates &&
+    &&   update-ca-certificates \
     && go get -u github.com/quantumew/mustache-cli \
     && cp $GOPATH/bin/* /usr/local/bin/ \
     && rm -rf $GOPATH
