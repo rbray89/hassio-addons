@@ -11,8 +11,8 @@
     "options": {
 	"use_cfg": false,
 	"services":[
-		{ "type": "main-ssl", "port": 4443, "protocol":"send-proxy-v2" },
-		{ "type": "openvpn", "port": 1194, "protocol":"" }
+		{ "type": "main-ssl", "address": "core-nginx-proxy", "port": 4443, "protocol":"send-proxy-v2" },
+		{ "type": "openvpn", "address": "572f9090-openvpn-server", "port": 1194, "protocol":"" }
 	]
     },
     "ports": {
