@@ -130,6 +130,8 @@ fi
 chmod +x /etc/iptables/add-openvpn-rules.sh
 chmod +x /etc/iptables/rm-openvpn-rules.sh
 
+cat /etc/iptables/add-openvpn-rules.sh
+echo ip -4 route ls
 
 /etc/iptables/add-openvpn-rules.sh
 
