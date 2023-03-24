@@ -58,5 +58,5 @@ frontend ssl
 {{#services}}
 backend {{type}}
     mode tcp
-    server {{type}}-localhost {{ip}}:{{port}} {{protocol}}
+    server {{type}}-localhost {{address}}:{{port}} {{protocol}}
 {{/services}}
