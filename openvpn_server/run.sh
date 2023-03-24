@@ -106,6 +106,8 @@ iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o $NIC -j MASQUERADE
 iptables -A INPUT -i tun0 -j ACCEPT
 iptables -A FORWARD -i $NIC -o tun0 -j ACCEPT
 iptables -A FORWARD -i tun0 -o $NIC -j ACCEPT
+iptables -A FORWARD -s 10.8.0.0/24 -j ACCEPT
+iptables -A FORWARD -d 10.8.0.0/24 -j ACCEPT
 iptables -A INPUT -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" > /etc/iptables/add-openvpn-rules.sh
 
 echo "#!/bin/sh
@@ -130,8 +132,9 @@ fi
 chmod +x /etc/iptables/add-openvpn-rules.sh
 chmod +x /etc/iptables/rm-openvpn-rules.sh
 
-cat /etc/iptables/add-openvpn-rules.sh
-echo `ip -4 route ls`
+#cat /etc/iptables/add-openvpn-rules.sh
+#echo `ip -4 route ls`
+cat /proc/sys/net/ipv4/ip_forward
 
 /etc/iptables/add-openvpn-rules.sh
 
