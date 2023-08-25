@@ -1,0 +1,29 @@
+{
+  "name": "rtl-tcp",
+  "version": "0.1.7",
+  "slug": "rtl-tcp",
+  "description": "rtl_tcp Server",
+  "url": "https://github.com/rbray89/hassio-addons/tree/main/rtl-tcp",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "application",
+  "boot": "auto",
+  "init": false,
+  "map": ["config:rw"],
+  "services": ["mqtt:want"],
+  "usb": true,
+  "udev": true,
+  "options": {
+    "devices": [{
+      "serial": "00000001",
+      "port": "12345"
+    }]
+  },
+  "schema": {
+    "devices": [{
+      "serial": "str",
+      "port": "port"
+    }]
+  },
+  "privileged": ["NET_ADMIN"],
+  "host_network": true
+}
