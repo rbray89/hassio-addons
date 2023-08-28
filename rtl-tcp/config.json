@@ -1,6 +1,6 @@
 {
   "name": "rtl-tcp",
-  "version": "0.1.7",
+  "version": "0.1.12",
   "slug": "rtl-tcp",
   "description": "rtl_tcp Server",
   "url": "https://github.com/rbray89/hassio-addons/tree/main/rtl-tcp",
